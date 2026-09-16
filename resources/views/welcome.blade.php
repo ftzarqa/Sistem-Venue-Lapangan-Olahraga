@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Venue Lapangan Olahraga</title>
-
-    <!-- Bootstrap 5.3 CSS - Hanya CSS Murni Tanpa JS -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    
-    <!-- CSS Kustom Anda (untuk modifikasi desain mandiri jika diperlukan) -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Sistem Ticketing Venue Sepak Bola</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-
-    <!-- Navbar Minimalis Berbasis Bootstrap CSS -->
-    <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm">
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand font-weight-bold" href="#">⚽ Sistem Venue</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link active" href="#">Beranda</a>
-                <a class="nav-link" href="#">Daftar Lapangan</a>
-                <a class="nav-link" href="#">Kontak</a>
+            <a class="navbar-brand" href="#">VenueBola</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section / Header Halaman Utama -->
-    <div class="container my-5">
-        <div class="p-5 text-center bg-white rounded-3 shadow-sm border">
-            <h1 class="text-body-emphasis display-5 fw-bold">Booking Lapangan Olahraga Jadi Mudah</h1>
-            <p class="col-lg-8 mx-auto fs-5 text-muted mt-3">
-                Selamat datang di platform penyewaan lapangan olahraga. Temukan venue terbaik di sekitar Anda, cek ketersediaan jadwal secara real-time, dan lakukan reservasi dengan instan.
-            </p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
-                <a href="#" class="btn btn-primary btn-lg px-4 gap-3 fw-semibold">Lihat Lapangan</a>
-                <a href="#" class="btn btn-outline-secondary btn-lg px-4">Hubungi Kami</a>
+    <!-- Hero Section -->
+    <div class="container mt-5 text-center">
+        <h1 class="display-4">Selamat Datang di VenueBola</h1>
+        <p class="lead">Sistem pemesanan tiket pertandingan sepak bola tercepat dan termudah.</p>
+    </div>
+
+    <!-- Daftar Pertandingan (Dinamis dari Database) -->
+    <div class="container mt-5">
+        <h3 class="mb-4">Pertandingan Mendatang</h3>
+        <div class="row">
+           <!-- Looping data dari Controller menggunakan Blade -->
+@forelse($events as $event)
+<div class="col-md-4 mb-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">{{ $event->tim_tuan_rumah }} vs {{ $event->tim_tamu }}</h5>
+            <p class="card-text">Tanggal: {{ $event->tanggal_tanding }}</p>
+            <p class="card-text text-danger">Sisa Tiket: {{ $event->stok_tiket }}</p>
+            <a href="/tiket/{{ $event->id }}" class="btn btn-primary w-100">Beli Tiket</a>
+        </div>
+    </div>
+</div>
+@empty
+            <div class="col-12 text-center">
+                <p>Belum ada pertandingan yang dijadwalkan.</p>
             </div>
+            @endforelse
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
