@@ -24,25 +24,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Rute Halaman Beli Tiket — dikunci, wajib login dulu
+// Rute Halaman Beli Tiket 
 Route::get('/tiket/{event}', [TiketController::class, 'show'])->middleware('auth')->name('tiket.show');
 
 require __DIR__.'/auth.php';
 
-// ==================== ADMIN ====================
+// BAGIAN ADMIN LOHYA
 
-// Admin authentication (login) — hanya untuk guest
+// Admin authentication guest ONLY
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'create'])->name('admin.login');
     Route::post('/admin/login', [AdminAuthController::class, 'store']);
 });
 
-// Admin logout — hanya untuk user yang sudah login
+// Admin logout hanya untuk user yang sudah login
 Route::post('/admin/logout', [AdminAuthController::class, 'destroy'])
     ->middleware('auth')
     ->name('admin.logout');
 
-// Admin area — wajib login + role admin
+// Admin area wajib login + role admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/dashboard');
     Route::get('/dashboard', function () {
