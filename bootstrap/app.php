@@ -16,6 +16,18 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
         ]);
+
+        $middleware->redirectGuestsTo(function (Request $request) {
+            return ($request->is('admin', 'admin/*') && ! $request->routeIs('admin.login'))
+                ? route('admin.login')
+                : route('login');
+        });
+
+        $middleware->redirectUsersTo(function (Request $request) {
+            return $request->user()?->role === 'admin'
+                ? route('admin.dashboard')
+                : route('dashboard');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

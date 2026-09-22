@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TiketController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
@@ -24,21 +25,26 @@ Route::middleware('auth')->group(function () {
 });
 
 // Rute Halaman Beli Tiket — dikunci, wajib login dulu
-Route::get('/tiket/{id}', function ($id) {
-    $event = Event::findOrFail($id);
-
-    return "<h1>Halaman Pemesanan Tiket</h1><p>Anda sedang memproses pembelian tiket untuk: <b>{$event->tim_tuan_rumah} vs {$event->tim_tamu}</b></p><a href='/'>Kembali ke Beranda</a>";
-})->middleware('auth')->name('tiket.show');
+Route::get('/tiket/{event}', [TiketController::class, 'show'])->middleware('auth')->name('tiket.show');
 
 require __DIR__.'/auth.php';
 
 // ==================== ADMIN ====================
 
-Route::get('/admin/login', [AdminAuthController::class, 'create'])->name('admin.login');
-Route::post('/admin/login', [AdminAuthController::class, 'store']);
-Route::post('/admin/logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
+// Admin authentication (login) — hanya untuk guest
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/login', [AdminAuthController::class, 'create'])->name('admin.login');
+    Route::post('/admin/login', [AdminAuthController::class, 'store']);
+});
 
+// Admin logout — hanya untuk user yang sudah login
+Route::post('/admin/logout', [AdminAuthController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('admin.logout');
+
+// Admin area — wajib login + role admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::redirect('/', '/admin/dashboard');
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
