@@ -67,7 +67,6 @@ class AlatOlahragaController extends Controller
     public function edit(AlatOlahraga $alatOlahraga)
     {
         return view('alat_olahraga.edit', compact('alatOlahraga'));
-        return view('alat')
     }
 
     /**
