@@ -10,7 +10,7 @@
                 <h3 class="fw-bold mb-1 text-dark">
                     <i class="bi bi-plus-circle text-primary me-2"></i>Tambah Alat Olahraga
                 </h3>
-                <p class="text-muted mb-0">Isi formulir berikut untuk mendaftarkan alat olahraga baru ke sistem</p>
+                <p class="text-muted mb-0">Isi formulirnya kalo Ga gabakalan dapet alat deck</p>
             </div>
             <a href="{{ route('alat-olahraga.index') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i> Kembali
@@ -29,12 +29,12 @@
 
                     <!-- Nama Alat -->
                     <div class="mb-3">
-                        <label for="nama_alat" class="form-label fw-semibold">Nama Alat Olahraga <span class="text-danger">*</span></label>
+                        <label for="nama_alat" class="form-label fw-semibold">Nama Alat <span class="text-danger">*</span></label>
                         <input type="text"
                                name="nama_alat"
                                id="nama_alat"
                                class="form-control @error('nama_alat') is-invalid @enderror"
-                               placeholder="Contoh: Raket Badminton Yonex Astrox 88D"
+                               placeholder="Contoh: Raket Badminton TOK dalang 1998"
                                value="{{ old('nama_alat') }}"
                                required autofocus>
                         @error('nama_alat')
@@ -51,7 +51,7 @@
                                    id="kategori"
                                    list="kategori-list"
                                    class="form-control @error('kategori') is-invalid @enderror"
-                                   placeholder="Pilih atau ketik kategori..."
+                                   placeholder="Pilih atau ketik ATAU BOMB..."
                                    value="{{ old('kategori') }}"
                                    required>
                             <datalist id="kategori-list">
@@ -73,12 +73,12 @@
                         <div class="col-md-6 mb-3">
                             <label for="kondisi" class="form-label fw-semibold">Kondisi Alat <span class="text-danger">*</span></label>
                             <select name="kondisi" id="kondisi" class="form-select @error('kondisi') is-invalid @enderror" required>
-                                <option value="" disabled {{ old('kondisi') ? '' : 'selected' }}>-- Pilih Kondisi --</option>
+                                <option value="" disabled {{ old('kondisi') ? '' : 'selected' }}>Pilih Kondisi</option>
                                 <option value="Baru" {{ old('kondisi') == 'Baru' ? 'selected' : '' }}>Baru</option>
                                 <option value="Sangat Baik" {{ old('kondisi') == 'Sangat Baik' ? 'selected' : '' }}>Sangat Baik</option>
                                 <option value="Baik" {{ old('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
                                 <option value="Cukup" {{ old('kondisi') == 'Cukup' ? 'selected' : '' }}>Cukup</option>
-                                <option value="Perlu Perbaikan" {{ old('kondisi') == 'Perlu Perbaikan' ? 'selected' : '' }}>Perlu Perbaikan</option>
+                                <option value="Perlu Perbaikan" {{ old('kondisi') == 'Perlu Perbaikan' ? 'selected' : '' }}>Broken Home</option>
                             </select>
                             @error('kondisi')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -89,7 +89,7 @@
                     <div class="row">
                         <!-- Tarif Sewa -->
                         <div class="col-md-6 mb-3">
-                            <label for="tarif_sewa" class="form-label fw-semibold">Tarif Sewa (Per Hari) <span class="text-danger">*</span></label>
+                            <label for="tarif_sewa" class="form-label fw-semibold">Tarif Sewa perHARI <span class="text-danger">*</span></label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text bg-light fw-semibold">Rp</span>
                                 <input type="number"
@@ -135,7 +135,7 @@
                             Batal
                         </a>
                         <button type="submit" class="btn btn-primary px-4">
-                            <i class="bi bi-save2-fill me-1"></i> Simpan Data Alat
+                            <i class="bi bi-save2-fill me-1"></i> Simpan
                         </button>
                     </div>
                 </form>

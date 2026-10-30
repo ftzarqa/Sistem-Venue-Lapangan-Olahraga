@@ -72,11 +72,11 @@
 </head>
 <body>
     <!-- Navbar Sederhana -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark"></nav>
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('alat-olahraga.index') }}">
                 <i class="bi bi-trophy-fill fs-4 text-warning"></i>
-                <span>SportRent <span class="fw-light opacity-75">| Rental Olahraga</span></span>
+                <span>SportRent NIH BOSS <span class="fw-light opacity-75"></span></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -105,7 +105,7 @@
             <div class="alert alert-success alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert">
                 <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
                 <div class="flex-grow-1">
-                    <strong>Berhasil!</strong> {{ session('success') }}
+                    <strong>Berhasil</strong> {{ session('success') }}
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -115,7 +115,7 @@
             <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert">
                 <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-danger"></i>
                 <div class="flex-grow-1">
-                    <strong>Terjadi Kesalahan!</strong> {{ session('error') }}
+                    <strong>Terjadi Kesalahan</strong> {{ session('error') }}
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -124,12 +124,6 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="py-3 text-center text-muted small">
-        <div class="container">
-            &copy; {{ date('Y') }} <strong>Modul Rental Alat Olahraga</strong> — Laravel MVC Sederhana
-        </div>
-    </footer>
 
     <!-- Bootstrap 5 Bundle JS CDN (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

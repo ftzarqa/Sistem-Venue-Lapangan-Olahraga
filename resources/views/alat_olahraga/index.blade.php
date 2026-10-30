@@ -11,7 +11,7 @@
                 <h3 class="fw-bold mb-1 text-dark">
                     <i class="bi bi-bicycle text-primary me-2"></i>Daftar Alat Olahraga
                 </h3>
-                <p class="text-muted mb-0">Kelola katalog inventaris alat olahraga untuk disewakan</p>
+                <p class="text-muted mb-0">Kelola DAH</p>
             </div>
             
             <a href="{{ route('alat-olahraga.create') }}" class="btn btn-primary shadow-sm">
@@ -22,7 +22,7 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center py-3">
                 <span class="fw-semibold text-secondary">
-                    <i class="bi bi-table me-1"></i> Inventaris Peralatan
+                    <i class="bi bi-table me-1"></i> Inventaris
                 </span>
                 <span class="badge bg-light text-secondary border">
                     Total: {{ count($alatOlahraga) }} Data
@@ -37,7 +37,7 @@
                                 <th scope="col">Nama Alat</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Kondisi</th>
-                                <th scope="col">Tarif Sewa (Hari)</th>
+                                <th scope="col">Tarif Sewa perHARI</th>
                                 <th scope="col" class="text-center">Stok</th>
                                 <th scope="col" class="text-center" style="width: 170px;">Aksi</th>
                             </tr>
@@ -109,10 +109,10 @@
                                     <td colspan="7" class="text-center py-5">
                                         <div class="text-muted">
                                             <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary opacity-50"></i>
-                                            <h5 class="fw-semibold">Belum Ada Data Alat Olahraga</h5>
-                                            <p class="small mb-3">Katalog peralatan olahraga saat ini masih kosong.</p>
+                                            <h5 class="fw-semibold">Belom ada ALAT</h5>
+                                            <p class="small mb-3">ALAT KOSONG.</p>
                                             <a href="{{ route('alat-olahraga.create') }}" class="btn btn-sm btn-primary">
-                                                <i class="bi bi-plus-lg me-1"></i> Tambah Data Sekarang
+                                                <i class="bi bi-plus-lg me-1"></i> Tambah Data 
                                             </a>
                                         </div>
                                     </td>
