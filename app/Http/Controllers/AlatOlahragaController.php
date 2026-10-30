@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class AlatOlahragaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar seluruh data alat olahraga.
      */
     public function index()
     {
-        $alatOlahraga = AlatOlahraga::latest()->paginate(10);
+        $alatOlahraga = AlatOlahraga::all();
 
         return view('alat_olahraga.index', compact('alatOlahraga'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk menambahkan data alat olahraga.
      */
     public function create()
     {
@@ -26,82 +26,68 @@ class AlatOlahragaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan data baru alat olahraga ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_alat'  => 'required|string|max:255',
-            'kategori'   => 'required|string|max:100',
-            'kondisi'    => 'required|string|max:50',
-            'tarif_sewa' => 'required|numeric|min:0',
-            'stok'       => 'required|numeric|integer|min:0',
-        ], [
-            'nama_alat.required'  => 'Nama alat olahraga wajib diisi.',
-            'kategori.required'   => 'Kategori wajib dipilih/diisi.',
-            'kondisi.required'    => 'Kondisi alat wajib dipilih/diisi.',
-            'tarif_sewa.required' => 'Tarif sewa per hari wajib diisi.',
-            'tarif_sewa.numeric'  => 'Tarif sewa harus berupa angka.',
-            'stok.required'       => 'Jumlah stok wajib diisi.',
-            'stok.numeric'        => 'Stok harus berupa angka.',
-            'stok.integer'        => 'Stok harus berupa bilangan bulat.',
+        $request->validate([
+            'nama_alat'  => 'required',
+            'kategori'   => 'required',
+            'kondisi'    => 'required',
+            'tarif_sewa' => 'required|numeric',
+            'stok'       => 'required|numeric',
         ]);
 
-        AlatOlahraga::create($validated);
+        AlatOlahraga::create($request->all());
 
         return redirect()->route('alat-olahraga.index')
             ->with('success', 'Data alat olahraga berhasil ditambahkan!');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail alat olahraga (dialihkan ke halaman edit).
      */
-    public function show(AlatOlahraga $alatOlahraga)
+    public function show($id)
     {
-        return redirect()->route('alat-olahraga.edit', $alatOlahraga);
+        return redirect()->route('alat-olahraga.edit', $id);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form edit untuk data alat olahraga tertentu.
      */
-    public function edit(AlatOlahraga $alatOlahraga)
+    public function edit($id)
     {
+        $alatOlahraga = AlatOlahraga::findOrFail($id);
+
         return view('alat_olahraga.edit', compact('alatOlahraga'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui data alat olahraga di database.
      */
-    public function update(Request $request, AlatOlahraga $alatOlahraga)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nama_alat'  => 'required|string|max:255',
-            'kategori'   => 'required|string|max:100',
-            'kondisi'    => 'required|string|max:50',
-            'tarif_sewa' => 'required|numeric|min:0',
-            'stok'       => 'required|numeric|integer|min:0',
-        ], [
-            'nama_alat.required'  => 'Nama alat olahraga wajib diisi.',
-            'kategori.required'   => 'Kategori wajib dipilih/diisi.',
-            'kondisi.required'    => 'Kondisi alat wajib dipilih/diisi.',
-            'tarif_sewa.required' => 'Tarif sewa per hari wajib diisi.',
-            'tarif_sewa.numeric'  => 'Tarif sewa harus berupa angka.',
-            'stok.required'       => 'Jumlah stok wajib diisi.',
-            'stok.numeric'        => 'Stok harus berupa angka.',
-            'stok.integer'        => 'Stok harus berupa bilangan bulat.',
+        $request->validate([
+            'nama_alat'  => 'required',
+            'kategori'   => 'required',
+            'kondisi'    => 'required',
+            'tarif_sewa' => 'required|numeric',
+            'stok'       => 'required|numeric',
         ]);
 
-        $alatOlahraga->update($validated);
+        $alatOlahraga = AlatOlahraga::findOrFail($id);
+        $alatOlahraga->update($request->all());
 
         return redirect()->route('alat-olahraga.index')
             ->with('success', 'Data alat olahraga berhasil diperbarui!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus data alat olahraga dari database.
      */
-    public function destroy(AlatOlahraga $alatOlahraga)
+    public function destroy($id)
     {
+        $alatOlahraga = AlatOlahraga::findOrFail($id);
         $alatOlahraga->delete();
 
         return redirect()->route('alat-olahraga.index')

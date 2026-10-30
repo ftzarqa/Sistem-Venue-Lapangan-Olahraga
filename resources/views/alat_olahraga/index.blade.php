@@ -14,22 +14,10 @@
                 <p class="text-muted mb-0">Kelola katalog inventaris alat olahraga untuk disewakan</p>
             </div>
             
-            @if (Auth::user()?->role === 'admin')
-                <a href="{{ route('alat-olahraga.create') }}" class="btn btn-primary shadow-sm">
-                    <i class="bi bi-plus-lg me-1"></i> Tambah Alat Baru
-                </a>
-            @endif
+            <a href="{{ route('alat-olahraga.create') }}" class="btn btn-primary shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i> Tambah Alat Baru
+            </a>
         </div>
-
-        <!-- Role User Read-Only Notification -->
-        @if (Auth::user()?->role === 'user')
-            <div class="alert alert-info border-0 shadow-sm d-flex align-items-center py-2 px-3 mb-4 rounded-3">
-                <i class="bi bi-info-circle-fill text-info fs-5 me-2"></i>
-                <div class="small">
-                    <strong>Mode Read-Only:</strong> Anda masuk sebagai <strong>User</strong>. Anda dapat melihat daftar inventaris alat olahraga. Fitur Tambah, Edit, dan Hapus hanya dapat diakses oleh <strong>Admin</strong>.
-                </div>
-            </div>
-        @endif
 
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center py-3">
@@ -37,7 +25,7 @@
                     <i class="bi bi-table me-1"></i> Inventaris Peralatan
                 </span>
                 <span class="badge bg-light text-secondary border">
-                    Total: {{ $alatOlahraga->total() ?? $alatOlahraga->count() }} Data
+                    Total: {{ count($alatOlahraga) }} Data
                 </span>
             </div>
             <div class="card-body p-0">
@@ -51,16 +39,14 @@
                                 <th scope="col">Kondisi</th>
                                 <th scope="col">Tarif Sewa (Hari)</th>
                                 <th scope="col" class="text-center">Stok</th>
-                                @if (Auth::user()?->role === 'admin')
-                                    <th scope="col" class="text-center" style="width: 170px;">Aksi</th>
-                                @endif
+                                <th scope="col" class="text-center" style="width: 170px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($alatOlahraga as $index => $item)
                                 <tr>
                                     <td class="text-center text-muted fw-semibold">
-                                        {{ method_exists($alatOlahraga, 'firstItem') ? ($alatOlahraga->firstItem() + $index) : ($index + 1) }}
+                                        {{ $index + 1 }}
                                     </td>
                                     <td>
                                         <div class="fw-semibold text-dark">{{ $item->nama_alat }}</div>
@@ -103,35 +89,31 @@
                                             </span>
                                         @endif
                                     </td>
-                                    @if (Auth::user()?->role === 'admin')
-                                        <td class="text-center">
-                                            <div class="d-inline-flex gap-1">
-                                                <a href="{{ route('alat-olahraga.edit', $item->id) }}" class="btn btn-sm btn-outline-warning" title="Edit Alat">
-                                                    <i class="bi bi-pencil-square me-1"></i>Edit
-                                                </a>
-                                                <form action="{{ route('alat-olahraga.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus alat &quot;{{ $item->nama_alat }}&quot;?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Alat">
-                                                        <i class="bi bi-trash3-fill me-1"></i>Hapus
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    @endif
+                                    <td class="text-center">
+                                        <div class="d-inline-flex gap-1">
+                                            <a href="{{ route('alat-olahraga.edit', $item->id) }}" class="btn btn-sm btn-outline-warning" title="Edit Alat">
+                                                <i class="bi bi-pencil-square me-1"></i>Edit
+                                            </a>
+                                            <form action="{{ route('alat-olahraga.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus alat &quot;{{ $item->nama_alat }}&quot;?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Alat">
+                                                    <i class="bi bi-trash3-fill me-1"></i>Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="{{ Auth::user()?->role === 'admin' ? 7 : 6 }}" class="text-center py-5">
+                                    <td colspan="7" class="text-center py-5">
                                         <div class="text-muted">
                                             <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary opacity-50"></i>
                                             <h5 class="fw-semibold">Belum Ada Data Alat Olahraga</h5>
                                             <p class="small mb-3">Katalog peralatan olahraga saat ini masih kosong.</p>
-                                            @if (Auth::user()?->role === 'admin')
-                                                <a href="{{ route('alat-olahraga.create') }}" class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-plus-lg me-1"></i> Tambah Data Sekarang
-                                                </a>
-                                            @endif
+                                            <a href="{{ route('alat-olahraga.create') }}" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-plus-lg me-1"></i> Tambah Data Sekarang
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -140,11 +122,6 @@
                     </table>
                 </div>
             </div>
-            @if (method_exists($alatOlahraga, 'hasPages') && $alatOlahraga->hasPages())
-                <div class="card-footer bg-white py-3 border-top d-flex justify-content-center">
-                    {{ $alatOlahraga->links() }}
-                </div>
-            @endif
         </div>
     </div>
 </div>

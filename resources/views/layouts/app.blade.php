@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Rental Alat Olahraga') - Sistem Manajemen Rental</title>
+    <title>@yield('title', 'Rental Alat Olahraga') - Modul Rental</title>
 
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -71,7 +71,7 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Navbar Sederhana -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('alat-olahraga.index') }}">
@@ -83,48 +83,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-1">
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('alat-olahraga.index') ? 'active fw-semibold' : '' }}" href="{{ route('alat-olahraga.index') }}">
-                                <i class="bi bi-grid-fill me-1"></i> Daftar Alat
-                            </a>
-                        </li>
-                        @if (Auth::user()->role === 'admin')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('alat-olahraga.create') ? 'active fw-semibold' : '' }}" href="{{ route('alat-olahraga.create') }}">
-                                    <i class="bi bi-plus-circle-fill me-1"></i> Tambah Alat
-                                </a>
-                            </li>
-                        @endif
-                        <li class="nav-item dropdown ms-lg-2">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="badge {{ Auth::user()->role === 'admin' ? 'bg-danger' : 'bg-info text-dark' }} text-uppercase">
-                                    {{ Auth::user()->role }}
-                                </span>
-                                <span>{{ Auth::user()->name }}</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
-                                <li class="px-3 py-2 small text-muted">
-                                    <i class="bi bi-envelope me-1"></i> {{ Auth::user()->email }}
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2">
-                                            <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('login') ? 'active fw-semibold' : '' }}" href="{{ route('login') }}">
-                                <i class="bi bi-box-arrow-in-right me-1"></i> Login
-                            </a>
-                        </li>
-                    @endauth
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('alat-olahraga.index') ? 'active fw-semibold' : '' }}" href="{{ route('alat-olahraga.index') }}">
+                            <i class="bi bi-grid-fill me-1"></i> Daftar Alat
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('alat-olahraga.create') ? 'active fw-semibold' : '' }}" href="{{ route('alat-olahraga.create') }}">
+                            <i class="bi bi-plus-circle-fill me-1"></i> Tambah Alat
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -159,7 +127,7 @@
     <!-- Footer -->
     <footer class="py-3 text-center text-muted small">
         <div class="container">
-            &copy; {{ date('Y') }} <strong>Modul Rental Alat Olahraga</strong> — Laravel MVC
+            &copy; {{ date('Y') }} <strong>Modul Rental Alat Olahraga</strong> — Laravel MVC Sederhana
         </div>
     </footer>
 
